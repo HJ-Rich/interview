@@ -1,0 +1,13 @@
+String과 StringBuffer의 차이점은?
+
+String은 짧은 문자열을 더할 경우 사용합니다.
+StringBuffer는 스레드에 안전한 프로그램이 필요할 때나, 
+개발 중인 시스템의 부분이 스레드에 안전한지 모를 경우 사용하면 좋습니다.
+StringBuilder는 스레드에 안전한지 여부가 전혀 관계 없는 프로그램을 개발할 때 사용하면 좋습니다.
+출처: https://12bme.tistory.com/42 [길은 가면, 뒤에 있다.:티스토리]
+
+String과 StringBuffer의 차이점은?!!
+
+이러이러하고 저러저러하다
+
+gg

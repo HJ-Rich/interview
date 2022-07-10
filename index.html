@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+    <h1>면접 화팅</h1>
+    <div id="categories">
+    </div>
+
+    <div id="quest">
+        <h3>질문</h3>
+        <div id="question">
+            문제 위치
+        </div>
+        <h3>답변 예시</h3>
+        <div id="answer">
+            정답 위치
+        </div>
+    </div>
+    
+    <script>
+        const globalMap = new Map();
+        const question = document.getElementById('question');
+        const answer = document.getElementById('answer');
+
+        const richFunction = (filename, text) => {
+            const texts = text.split('\n');
+            const singleCategory = new Map();
+
+            let isTitle = true;
+            let isContent = false;
+            let currentTitle = '';
+
+            for (let i = 0; i < texts.length; i++) {
+                if (isTitle) {
+                    singleCategory.set(texts[i], "");
+                    currentTitle = texts[i];
+                    isTitle = false;
+                    continue;
+                } 
+                
+                if (!isContent) {
+                    isContent = true;
+                    continue;
+                }
+
+                if (isContent && texts[i] === '') {
+                    isContent = false;
+                    isTitle = true;
+                    continue;
+                }
+
+                let currentContent = singleCategory.get(currentTitle);
+                if (currentContent !== '') currentContent += '<br><br>';
+                singleCategory.set(currentTitle, currentContent += texts[i]);
+            }
+
+            globalMap.set(filename, singleCategory);
+
+            const newButton = document.createElement('button');
+            newButton.classList.add('quizButton');
+            newButton.addEventListener('click',() => {
+                const newQuiz = globalMap.get(filename);
+                const randomIndex = Math.floor(Math.random() * newQuiz.size);
+
+                question.textContent = Array.from(newQuiz.keys())[randomIndex];
+                answer.innerHTML = newQuiz.get(question.textContent);
+            })
+            newButton.textContent = filename;
+            document.getElementById('categories').appendChild(newButton);
+
+        }
+
+        const setQuiz = (fileName) => {
+            if (fileName === '') return;
+
+            fetch(fileName)
+            .then(res => res.text())
+            .then(text => richFunction(fileName, text));
+        }
+
+        fetch('QuizFileNames.txt')
+        .then(res => res.text())
+        .then(text => text.split('\n').forEach(fileName => setQuiz(fileName)));
+    </script>
+</body>
+</html>

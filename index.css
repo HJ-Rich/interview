@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: rgb(176, 172, 172);
+    background-color: black;
+}
+
+button {
+    white-space: pre;
+    padding: 10px;
+    margin-left: 20px;
+}
+
+h3 {
+    margin-top: 50px;
+}
+
+#categories {
+    border: 5px solid pink;
+    min-height: 100px;
+}
