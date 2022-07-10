@@ -12,21 +12,28 @@
     <div id="categories">
     </div>
 
+    <input type="radio" id="html" name="fav_language" value="HTML" checked>
+    <label for="html">정답 보이기</label><br>
+    <input type="radio" id="css" name="fav_language" value="CSS">
+    <label for="css">정답 감추기</label><br>
+
     <div id="quest">
         <h3>질문</h3>
         <div id="question">
             문제 위치
         </div>
         <h3>답변 예시</h3>
-        <div id="answer">
-            정답 위치
-        </div>
+        <details>
+            <summary>정답 예시 보기</summary>
+            <p id="answer"></p>
+        </details>
     </div>
     
     <script>
         const globalMap = new Map();
         const question = document.getElementById('question');
         const answer = document.getElementById('answer');
+        const details = document.querySelector('details');
 
         const richFunction = (filename, text) => {
             const texts = text.split('\n');
@@ -70,10 +77,11 @@
 
                 question.textContent = Array.from(newQuiz.keys())[randomIndex];
                 answer.innerHTML = newQuiz.get(question.textContent);
+
+                details.open = document.getElementById('html').checked;
             })
             newButton.textContent = filename;
             document.getElementById('categories').appendChild(newButton);
-
         }
 
         const setQuiz = (fileName) => {
