@@ -81,7 +81,7 @@
 
             details.open = document.getElementById('html').checked;
         })
-        newButton.textContent = filename;
+        newButton.textContent = filename.split('.')[0];
         document.getElementById('categories').appendChild(newButton);
     }
 
